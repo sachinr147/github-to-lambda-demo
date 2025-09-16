@@ -13,8 +13,7 @@ phases:
       - echo "Installing dependencies..."
   pre_build:
     commands:
-      - echo "Pre-build phase started on""
-      - echo Current directory contents: null
+      - echo "Pre-build phase started on"
       - ls -la
   build:
     commands:
