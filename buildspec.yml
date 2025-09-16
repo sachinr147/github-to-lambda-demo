@@ -4,7 +4,7 @@ env:
   variables:
     S3_BUCKET_NAME: order-service-build-files-bucket
     LAMBDA_FUNCTION_NAME: order-service
-    ZIP_FILE_NAME: aws-lambda-example-1.0-SNAPSHOT.zip
+
 phases:
   install:
     runtime-versions:
@@ -21,13 +21,17 @@ phases:
       - mvn clean install -P assembly-zip
   post_build:
     commands:
-      - echo "Navigating to target directory..."
-      - cd target
+      - echo "Finding generated ZIP file..."
+      - export ZIP_FILE_NAME=$(ls target/*.zip | head -n 1 | xargs -n 1 basename)
+      - echo "ZIP_FILE_NAME=${ZIP_FILE_NAME}"
       - echo "Uploading the deployment package to S3..."
-      - aws s3 cp ${ZIP_FILE_NAME} s3://${S3_BUCKET_NAME}/
+      - aws s3 cp target/${ZIP_FILE_NAME} s3://${S3_BUCKET_NAME}/
       - echo "Updating the Lambda function code..."
-      - aws lambda update-function-code --function-name ${LAMBDA_FUNCTION_NAME}
-        --s3-bucket ${S3_BUCKET_NAME} --s3-key ${ZIP_FILE_NAME}
+      - aws lambda update-function-code \
+          --function-name ${LAMBDA_FUNCTION_NAME} \
+          --s3-bucket ${S3_BUCKET_NAME} \
+          --s3-key ${ZIP_FILE_NAME}
+
 artifacts:
   files:
-    - target/${ZIP_FILE_NAME}
+    - target/*.zip
