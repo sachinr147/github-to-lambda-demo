@@ -38,10 +38,7 @@ phases:
       - aws s3api head-object --bucket ${S3_BUCKET_NAME} --key ${ZIP_FILE_NAME}
 
       - echo "Updating the Lambda function code..."
-      - aws lambda update-function-code \
-          --function-name ${LAMBDA_FUNCTION_NAME} \
-          --s3-bucket ${S3_BUCKET_NAME} \
-          --s3-key ${ZIP_FILE_NAME}
+      - aws lambda update-function-code --function-name ${LAMBDA_FUNCTION_NAME} --s3-bucket ${S3_BUCKET_NAME} --s3-key ${ZIP_FILE_NAME}
 
 artifacts:
   files:
