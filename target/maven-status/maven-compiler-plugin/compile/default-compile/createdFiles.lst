@@ -1,0 +1,7 @@
+org/example/controller/PingController.class
+org/example/controller/OrderController.class
+org/example/Application.class
+org/example/StreamLambdaHandler.class
+org/example/config/DynamoDBConfig.class
+org/example/repository/OrderRepo.class
+org/example/entity/Order.class
