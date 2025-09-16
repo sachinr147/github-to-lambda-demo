@@ -8,7 +8,6 @@
     <artifactId>aws-lambda-example</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-
     <name>Serverless Spring Boot 3 API</name>
     <url>https://github.com/aws/serverless-java-container</url>
 
