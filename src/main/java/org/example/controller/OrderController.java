@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -22,6 +23,18 @@ public class OrderController {
 //    public ResponseEntity<String> getOrder(){
 //      return ResponseEntity.ok("Order placed successfully!");
 //    }
+    @GetMapping(path = "/fetchorder",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public  ResponseEntity<List<Order>> getAllOrders() {
+        try {
+            List<Order> allOrders = orderRepo.findAll();
+            return ResponseEntity.ok(allOrders);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+
+    }
 
     @PostMapping(path = "/order",
             consumes = MediaType.APPLICATION_JSON_VALUE,

@@ -8,6 +8,8 @@ import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import lombok.RequiredArgsConstructor;
 import org.example.entity.Order;
 
+import java.util.List;
+
 @Repository
 public class OrderRepo {
 
@@ -17,5 +19,10 @@ public class OrderRepo {
     public void save(Order order) {
         DynamoDbTable<Order> table = dynamoDbEnhancedClient.table("order", TableSchema.fromBean(Order.class));
         table.putItem(order);
+    }
+
+    public List<Order> findAll() {
+        DynamoDbTable<Order> table = dynamoDbEnhancedClient.table("order", TableSchema.fromBean(Order.class));
+        return table.scan().items().stream().toList();
     }
 }
